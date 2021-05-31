@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XMLHttpRequest</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#get').click(function () {
+                $.ajax({
+                    url: '/products',
+                    type: 'get',
+                    dataType: 'text',
+                    success: function (data) {
+                        $('#output').val(data);
+                    }
+                });
+            });
+
+            $('#post').click(function () {  
+                $.ajax({
+                    url: '/products/',
+                    type: 'post',
+                    dataType: 'text',
+                    data: {
+                        name: $('#name').val(),
+                        price: $('#price').val()
+                    },
+                    success: function (data) {
+                        $('#output').val(data);
+                        $('#name2').val($("#name").val());
+                        $('#price2').val($("#price").val());
+                    }
+                });
+            });
+
+            $('#put').click(function () {   //put 버튼을 click 했을 때, 
+                $.ajax({
+                    url: '/products/'+$('#index').val(),
+                    type: 'put',
+                    dataType: 'text',
+                    data: {
+                        name: $('#name').val(),
+                        price: $('#price').val()
+                    },
+                    success: function (data) {
+                        $('#output').val(data);
+                        $('#name2').val($("#name").val());
+                        $('#price2').val($("#price").val());
+                    }
+                });
+            });
+
+            $('#delete').click(function () {
+                $.ajax({
+                    url: `/products/${$("#index").val()}`, //put 버튼과 마찬가지로 proj1은 0번째 인덱스 값을 지우는게 아니라 해당위치의 인덱스 값이 지워지게끔 수정해야함
+                    type: 'delete',
+                    dataType: 'text',
+                    success: function (data) {
+                        $('#output').val(data);
+                        $('#name2').val($("#name").val());
+                        $('#price2').val($("#price").val());
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>입력 명령 버튼 :</h2>
+    <button id="get">음료객체정보읽기(GET)</button>
+    <button id="post">신규음료등록(POST)</button>
+    <button id="put">기존음료수정(PUT)</button>
+    <button id="delete">기존음료삭제(DELETE)</button>
+    <hr style="margin-top: 2rem;">
+    <h2 style="margin-top: 3rem;">입력 데이터 :</h2>
+    <div>
+        <label for="name">음료 이름: </label>
+        <input id="name" />
+    </div>
+    <div>
+        <label for="price">음료 가격: </label>
+        <input id="price" />
+    </div>
+    <label for="index">음료index: </label>
+    <input id="index"/>
+    <hr style="margin-top: 3rem;">
+    <h2 style="margin-top: 3rem;">응답 메세지 전체 :</h2>
+    <textarea id="output" disabled="disabled" cols="40" rows="5"></textarea>
+    <h2 style="margin-top: 3rem;"> 수정/추가 이후 해당 음료 정보</h2>
+    <div>
+        <label for="name2">음료 이름: </label>
+        <input id="name2" />
+    </div>
+    <div>
+        <label for="price2">음료 가격: </label>
+        <input id="price2" />
+    </div>
+</body>
+</html>
